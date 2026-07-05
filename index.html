@@ -21,21 +21,25 @@
         .container { width: 100%; padding: 0 10px; }
         .clock-wrapper { display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; }
         
+        /* Devasa saat karakterleriniz */
         .time-digits { 
             font-size: 210px; font-weight: bold; line-height: 1; letter-spacing: -8px;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         
+        /* Kibar iki nokta */
         #separator {
             font-size: 110px; font-weight: bold; line-height: 1;
             margin: 0 35px; color: #ffffff; display: block;
         }
         
+        /* Kırmızı saniye */
         #seconds {
             font-size: 70px; color: #ff3b30; margin-left: 25px; font-weight: bold;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         
+        /* Renkli tarih */
         #date { 
             font-size: 34px; margin-top: 70px; text-transform: uppercase; letter-spacing: 3px;
             font-family: Arial, sans-serif; font-weight: bold;
@@ -44,47 +48,45 @@
         .date-text { color: #ffffff; }
         .day-text { color: #007aff; margin-left: 15px; }
 
-        /* RADYO BÖLÜMÜ */
+        /* YENİ TEK SATIR KAYDIRILABİLİR RADYOLAR */
         .radio-wrapper {
-            margin-top: 50px;
-            font-family: Arial, sans-serif;
+            margin-top: 80px;
+            width: 100%;
+            padding: 0 20px;
         }
         
-        #radio-status {
-            font-size: 16px;
-            color: #888888;
-            margin-bottom: 12px;
-            letter-spacing: 1px;
-            font-weight: bold;
-            text-transform: uppercase;
+        /* Sağa sola kaydırmayı sağlayan ana şerit haznesi */
+        .scroll-container {
+            width: 100%;
+            overflow-x: scroll;
+            white-space: nowrap;
+            padding: 15px 0;
+            /* iOS 5 için akıcı dokunmatik kaydırma desteği */
+            -webkit-overflow-scrolling: touch; 
         }
         
-        .radio-grid {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-box-align: center;
-        }
-
-        .radio-row {
-            display: -webkit-box;
-            -webkit-box-pack: center;
-            margin: 5px 0;
+        /* Eski iPad'in scrollbar'ını gizlemek için */
+        .scroll-container::-webkit-scrollbar {
+            display: none;
         }
         
         .r-btn {
+            display: inline-block;
             background: #111111;
             color: #aaaaaa;
             border: 1px solid #333333;
-            padding: 10px 18px;
-            font-size: 14px;
+            padding: 12px 24px;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
             font-weight: bold;
-            margin: 0 5px;
-            border-radius: 4px;
+            margin: 0 6px;
+            border-radius: 6px;
             cursor: pointer;
             -webkit-user-select: none;
         }
         
-        .r-btn:active {
+        /* Seçilen aktif radyonun alacağı şık mavi renk */
+        .r-btn.active {
             background: #007aff;
             color: #ffffff;
             border-color: #007aff;
@@ -93,10 +95,6 @@
         .stop-btn {
             color: #ff3b30;
             border-color: #441111;
-        }
-        .stop-btn:active {
-            background: #ff3b30;
-            color: #ffffff;
         }
     </style>
 </head>
@@ -114,23 +112,23 @@
         <!-- TARİH -->
         <div id="date">Yükleniyor...</div>
 
-        <!-- ESKİ SİSTEMLERE UYUMLU SAF MP3 RADYOLAR -->
+        <!-- TEK SATIRDA PARMAKLA KAYDIRILAN RADYO ŞERİDİ -->
         <div class="radio-wrapper">
-            <div id="radio-status">Radyo Kapalı</div>
-            <div class="radio-grid">
-                <!-- 1. Sıra Radyolar -->
-                <div class="radio-row">
-                    <button class="r-btn" onclick="playRadio('Joy FM', 'https://listen.powerapp.com.tr/joyfm/mpeg/icecast.audio')">JOY FM</button>
-                    <button class="r-btn" onclick="playRadio('Power FM', 'https://listen.powerapp.com.tr/powerfm/mpeg/icecast.audio')">POWER FM</button>
-                    <button class="r-btn" onclick="playRadio('Power Türk', 'https://listen.powerapp.com.tr/powerturk/mpeg/icecast.audio')">POWER TÜRK</button>
-                </div>
-                <!-- 2. Sıra Radyolar (Yalın MP3 Yayın Portları Yerleştirildi) -->
-                <div class="radio-row">
-                    <button class="r-btn" onclick="playRadio('Radyo Alaturka', 'https://37.247.98.8/stream/36/')">RD ALATURKA</button>
-                    <button class="r-btn" onclick="playRadio('Kral FM', 'https://37.247.98.8/stream/13/')">KRAL FM</button>
-                    <button class="r-btn" onclick="playRadio('Radyo Voyage', 'https://37.247.98.8/stream/31/')">VOYAGE</button>
-                    <button class="r-btn stop-btn" onclick="stopRadio()">KAPAT</button>
-                </div>
+            <div class="scroll-container">
+                <button id="btn-stop" class="r-btn stop-btn" onclick="stopRadio()">KAPAT</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerfm/mpeg/icecast.audio')">POWER FM</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerturk/mpeg/icecast.audio')">POWER TÜRK</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/joyfm/mpeg/icecast.audio')">JOY FM</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/joyturk/mpeg/icecast.audio')">JOY TÜRK</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/joyturkakustik/mpeg/icecast.audio')">JOY TÜRK AKUSTİK</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerchill/mpeg/icecast.audio')">POWER CHILL</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerpop/mpeg/icecast.audio')">POWER POP</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerlove/mpeg/icecast.audio')">POWER LOVE</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powergold/mpeg/icecast.audio')">POWER GOLD</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powersmoothjazz/mpeg/icecast.audio')">SMOOTH JAZZ</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerdance/mpeg/icecast.audio')">POWER DANCE</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powersalsa/mpeg/icecast.audio')">POWER SALSA</button>
+                <button class="r-btn" onclick="playRadio(this, 'https://listen.powerapp.com.tr/powerrock/mpeg/icecast.audio')">POWER ROCK</button>
             </div>
         </div>
     </div>
@@ -156,30 +154,30 @@
 
         // Radyo Scripti
         var player = document.getElementById('radioPlayer');
-        var statusText = document.getElementById('radio-status');
 
-        function playRadio(name, url) {
-            statusText.innerHTML = "Bağlanıyor...";
-            statusText.style.color = "#007aff";
+        function playRadio(clickedButton, url) {
+            // Önce tüm butonlardaki aktiflik (mavi renk) sınıfını temizle
+            var buttons = document.getElementsByClassName('r-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].className = buttons[i].className.replace(' active', '');
+            }
+            
+            // Sadece tıklanan butonu mavi yap
+            clickedButton.className += ' active';
+            
             player.src = url;
             player.play();
-            
-            player.onplaying = function() {
-                statusText.innerHTML = "Çalıyor: " + name;
-                statusText.style.color = "#4cd964";
-            };
-            
-            player.onerror = function() {
-                statusText.innerHTML = "Yayın Bağlantı Hatası!";
-                statusText.style.color = "#ff3b30";
-            };
         }
 
         function stopRadio() {
             player.pause();
             player.src = "";
-            statusText.innerHTML = "Radyo Kapalı";
-            statusText.style.color = "#888888";
+            
+            // Kapatılınca tüm mavi ışıkları söndür
+            var buttons = document.getElementsByClassName('r-btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].className = buttons[i].className.replace(' active', '');
+            }
         }
     </script>
 </body>
