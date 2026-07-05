@@ -21,29 +21,19 @@
         .container { width: 100%; padding: 0 10px; }
         .clock-wrapper { display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; }
         
-        /* Saat ve Dakika blokları upuzun ve şık */
         .time-digits { 
             font-size: 210px; font-weight: bold; line-height: 1; letter-spacing: -8px;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         
-        /* İki nokta ayarı: Boyutu küçültüldü, esnetme kaldırıldı ve iki yana boşluk eklendi */
+        /* İki nokta: Boyutu küçültüldü, uzatması kaldırıldı ve araları açıldı */
         #separator {
-            font-size: 130px;
+            font-size: 110px;
             font-weight: bold;
             line-height: 1;
-            margin: 0 25px; /* Saat ve dakika arasını açan kritik boşluk */
+            margin: 0 35px; /* Saat ve dakika arasını belirgin şekilde açan boşluk */
             color: #ffffff;
             display: block;
-            /* iOS 5 Safari uyumlu eski usul yanıp sönme animasyonu tanımlama */
-            -webkit-animation: blinker 1s linear infinite;
-        }
-        
-        /* İki noktanın saniyede bir yumuşakça yanıp sönmesi için */
-        @-webkit-keyframes blinker {
-            0% { opacity: 1.0; }
-            50% { opacity: 0.0; }
-            100% { opacity: 1.0; }
         }
         
         #seconds {
@@ -62,7 +52,6 @@
 <body>
     <div class="container">
         <div class="clock-wrapper">
-            <!-- Saat ve Dakika birbirinden ayrıldı, ortadaki iki nokta kibarlaştırıldı -->
             <span id="hours" class="time-digits">00</span>
             <span id="separator">:</span>
             <span id="minutes" class="time-digits">00</span>
