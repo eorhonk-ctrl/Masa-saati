@@ -18,55 +18,23 @@
             -webkit-box-align: center;
             height: 100vh;
         }
-        .container {
-            width: 100%;
-            padding: 0 10px;
-        }
-        .clock-wrapper {
-            display: -webkit-box;
-            -webkit-box-pack: center;
-            -webkit-box-align: center;
-        }
-        /* Fontu dikey eksende %140 yukarı doğru uzatıyoruz */
+        .container { width: 100%; padding: 0 10px; }
+        .clock-wrapper { display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; }
         #time { 
-            font-size: 210px; 
-            font-weight: bold; 
-            line-height: 1;
-            letter-spacing: -8px;
-            -webkit-transform: scaleY(1.4);
-            transform: scaleY(1.4);
-            display: block;
+            font-size: 210px; font-weight: bold; line-height: 1; letter-spacing: -8px;
+            -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
-        /* Kırmızı saniye */
         #seconds {
-            font-size: 70px;
-            color: #ff3b30; 
-            margin-left: 20px;
-            font-weight: bold;
-            -webkit-transform: scaleY(1.4);
-            transform: scaleY(1.4);
-            display: block;
+            font-size: 70px; color: #ff3b30; margin-left: 20px; font-weight: bold;
+            -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
-        /* Renklendirilmiş ve hafif esnetilmiş yeni tarih bloğu */
         #date { 
-            font-size: 34px; 
-            margin-top: 80px; 
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            -webkit-transform: scaleY(1.1);
-            transform: scaleY(1.1);
+            font-size: 34px; margin-top: 80px; text-transform: uppercase; letter-spacing: 3px;
+            font-family: Arial, sans-serif; font-weight: bold;
+            -webkit-transform: scaleY(1.1); transform: scaleY(1.1);
         }
-        /* Tarih sayısı ve ay adı için beyaz renk */
-        .date-text {
-            color: #ffffff;
-        }
-        /* Gün adı için canlı mavi renk */
-        .day-text {
-            color: #007aff;
-            margin-left: 10px;
-        }
+        .date-text { color: #ffffff; }
+        .day-text { color: #007aff; margin-left: 15px; }
     </style>
 </head>
 <body>
@@ -75,7 +43,6 @@
             <span id="time">00:00</span>
             <span id="seconds">00</span>
         </div>
-        <!-- Renkli dinamik tarih alanı -->
         <div id="date">Yükleniyor...</div>
     </div>
     <script>
@@ -90,11 +57,8 @@
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
             
-            // Tarih metnini renkli parçalara ayırarak ekrana basıyoruz
-            var dateHtml = '<span class="date-text">' + d.getDate() + ' ' + months[d.getMonth()] + '</span>' + 
-                           '<span class="day-text">' + days[d.getDay()] + '</span>';
-            
-            document.getElementById('date').innerHTML = dateHtml;
+            // iOS 5 uyumlu en kararlı metin birleştirme yöntemi
+            document.getElementById('date').innerHTML = '<span class="date-text">' + d.getDate() + ' ' + months[d.getMonth()] + '</span><span class="day-text">' + days[d.getDay()] + '</span>';
         }
         setInterval(clock, 1000);
         clock();
