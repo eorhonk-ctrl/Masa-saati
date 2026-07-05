@@ -1,88 +1,28 @@
-<!DOCTYPE html>
-<html lang="tr">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <!-- iOS 5 için tam ekran (Web App) modunu aktif eden kritik meta etiketleri -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Masa Saati</title>
+    <title>Saat</title>
     <style>
-        /* iOS 5 Safari uyumlu eski CSS standartları */
-        * {
-            box-sizing: border-box;
-            -webkit-user-select: none;
-        }
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000000;
-            color: #ffffff;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            display: -webkit-box;
-            -webkit-box-pack: center;
-            -webkit-box-align: center;
-            overflow: hidden;
-        }
-        .container {
-            text-align: center;
-        }
-        .clock {
-            font-size: 110px;
-            font-weight: bold;
-            letter-spacing: -2px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
-        .date {
-            font-size: 28px;
-            color: #888888;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+        body { background: black; color: white; font-family: Arial; text-align: center; padding-top: 150px; }
+        #clock { font-size: 90px; font-weight: bold; }
+        #date { font-size: 24px; color: #888; margin-top: 20px; }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div id="clock" class="clock">00:00:00</div>
-        <div id="date" class="date">1 Ocak Cuma</div>
-    </div>
-
+    <div id="clock">00:00:00</div>
+    <div id="date">Yükleniyor...</div>
     <script>
-        function updateClock() {
-            var now = new Date();
+        function clock() {
+            var d = new Date();
+            var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+            if(h<10) h='0'+h; if(m<10) m='0'+m; if(s<10) s='0'+s;
+            document.getElementById('clock').innerHTML = h+':'+m+':'+s;
             
-            // Saat, dakika ve saniyeyi al (iOS 5 uyumlu vanilla JS)
-            var hours = now.getHours();
-            var minutes = now.getMinutes();
-            var seconds = now.getSeconds();
-            
-            // Başına sıfır ekleme (Padding)
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            
-            // Ekrana bas
-            document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
-            
-            // Tarih formatı (Türkçe günler ve aylar)
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
-            var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-            
-            var dayName = days[now.getDay()];
-            var monthName = months[now.getMonth()];
-            var dateNum = now.getDate();
-            
-            document.getElementById('date').innerHTML = dateNum + ' ' + monthName + ' ' + dayName;
+            document.getElementById('date').innerHTML = d.getDate() + ' ' + days[d.getDay()];
         }
-
-        // Saati her saniye güncelle
-        setInterval(updateClock, 1000);
-        // İlk açılışta hemen çalıştır
-        updateClock();
+        setInterval(clock, 1000);
+        clock();
     </script>
 </body>
 </html>
