@@ -20,12 +20,34 @@
         }
         .container { width: 100%; padding: 0 10px; }
         .clock-wrapper { display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; }
-        #time { 
+        
+        /* Saat ve Dakika blokları upuzun ve şık */
+        .time-digits { 
             font-size: 210px; font-weight: bold; line-height: 1; letter-spacing: -8px;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
+        
+        /* İki nokta ayarı: Boyutu küçültüldü, esnetme kaldırıldı ve iki yana boşluk eklendi */
+        #separator {
+            font-size: 130px;
+            font-weight: bold;
+            line-height: 1;
+            margin: 0 25px; /* Saat ve dakika arasını açan kritik boşluk */
+            color: #ffffff;
+            display: block;
+            /* iOS 5 Safari uyumlu eski usul yanıp sönme animasyonu tanımlama */
+            -webkit-animation: blinker 1s linear infinite;
+        }
+        
+        /* İki noktanın saniyede bir yumuşakça yanıp sönmesi için */
+        @-webkit-keyframes blinker {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.0; }
+            100% { opacity: 1.0; }
+        }
+        
         #seconds {
-            font-size: 70px; color: #ff3b30; margin-left: 20px; font-weight: bold;
+            font-size: 70px; color: #ff3b30; margin-left: 25px; font-weight: bold;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         #date { 
@@ -40,7 +62,10 @@
 <body>
     <div class="container">
         <div class="clock-wrapper">
-            <span id="time">00:00</span>
+            <!-- Saat ve Dakika birbirinden ayrıldı, ortadaki iki nokta kibarlaştırıldı -->
+            <span id="hours" class="time-digits">00</span>
+            <span id="separator">:</span>
+            <span id="minutes" class="time-digits">00</span>
             <span id="seconds">00</span>
         </div>
         <div id="date">Yükleniyor...</div>
@@ -51,13 +76,13 @@
             var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
             if(h<10) h='0'+h; if(m<10) m='0'+m; if(s<10) s='0'+s;
             
-            document.getElementById('time').innerHTML = h + ':' + m;
+            document.getElementById('hours').innerHTML = h;
+            document.getElementById('minutes').innerHTML = m;
             document.getElementById('seconds').innerHTML = s;
             
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
             
-            // iOS 5 uyumlu en kararlı metin birleştirme yöntemi
             document.getElementById('date').innerHTML = '<span class="date-text">' + d.getDate() + ' ' + months[d.getMonth()] + '</span><span class="day-text">' + days[d.getDay()] + '</span>';
         }
         setInterval(clock, 1000);
