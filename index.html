@@ -3,7 +3,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Saat</title>
+    <title>Masa Saati ve Radyo</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
@@ -21,61 +21,170 @@
         .container { width: 100%; padding: 0 10px; }
         .clock-wrapper { display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; }
         
+        /* Devasa saat karakterleriniz */
         .time-digits { 
             font-size: 210px; font-weight: bold; line-height: 1; letter-spacing: -8px;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         
-        /* İki nokta: Boyutu küçültüldü, uzatması kaldırıldı ve araları açıldı */
+        /* Kibar iki nokta */
         #separator {
-            font-size: 110px;
-            font-weight: bold;
-            line-height: 1;
-            margin: 0 35px; /* Saat ve dakika arasını belirgin şekilde açan boşluk */
-            color: #ffffff;
-            display: block;
+            font-size: 110px; font-weight: bold; line-height: 1;
+            margin: 0 35px; color: #ffffff; display: block;
         }
         
+        /* Kırmızı saniye */
         #seconds {
             font-size: 70px; color: #ff3b30; margin-left: 25px; font-weight: bold;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
+        
+        /* Renkli tarih */
         #date { 
-            font-size: 34px; margin-top: 80px; text-transform: uppercase; letter-spacing: 3px;
+            font-size: 34px; margin-top: 70px; text-transform: uppercase; letter-spacing: 3px;
             font-family: Arial, sans-serif; font-weight: bold;
             -webkit-transform: scaleY(1.1); transform: scaleY(1.1);
         }
         .date-text { color: #ffffff; }
         .day-text { color: #007aff; margin-left: 15px; }
+
+        /* RADYO BÖLÜMÜ */
+        .radio-wrapper {
+            margin-top: 50px;
+            font-family: Arial, sans-serif;
+        }
+        
+        #radio-status {
+            font-size: 16px;
+            color: #888888;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .radio-grid {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-box-align: center;
+        }
+
+        .radio-row {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            margin: 5px 0;
+        }
+        
+        .r-btn {
+            background: #111111;
+            color: #aaaaaa;
+            border: 1px solid #333333;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            -webkit-user-select: none;
+        }
+        
+        .r-btn:active {
+            background: #007aff;
+            color: #ffffff;
+            border-color: #007aff;
+        }
+        
+        .stop-btn {
+            color: #ff3b30;
+            border-color: #441111;
+        }
+        .stop-btn:active {
+            background: #ff3b30;
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
+
     <div class="container">
+        <!-- SAAT (Korundu) -->
         <div class="clock-wrapper">
             <span id="hours" class="time-digits">00</span>
             <span id="separator">:</span>
             <span id="minutes" class="time-digits">00</span>
             <span id="seconds">00</span>
         </div>
+        
+        <!-- TARİH (Korundu) -->
         <div id="date">Yükleniyor...</div>
+
+        <!-- YENİ İSTASYONLARLA RADYO ALANI -->
+        <div class="radio-wrapper">
+            <div id="radio-status">Radyo Kapalı</div>
+            <div class="radio-grid">
+                <!-- 1. Sıra Radyolar -->
+                <div class="radio-row">
+                    <button class="r-btn" onclick="playRadio('Joy FM', 'https://listen.powerapp.com.tr/joyfm/mpeg/icecast.audio')">JOY FM</button>
+                    <button class="r-btn" onclick="playRadio('Power FM', 'https://listen.powerapp.com.tr/powerfm/mpeg/icecast.audio')">POWER FM</button>
+                    <button class="r-btn" onclick="playRadio('Power Türk', 'https://listen.powerapp.com.tr/powerturk/mpeg/icecast.audio')">POWER TÜRK</button>
+                </div>
+                <!-- 2. Sıra Radyolar -->
+                <div class="radio-row">
+                    <button class="r-btn" onclick="playRadio('Radyo Alaturka', 'https://stream.radyoalaturka.com.tr/stream')">RD ALATURKA</button>
+                    <button class="r-btn" onclick="playRadio('Kral FM', 'https://radyo.kralmuzik.com.tr/akis/kralfm/playlist.m3u8')">KRAL FM</button>
+                    <button class="r-btn" onclick="playRadio('Radyo Voyage', 'https://radyo.kralmuzik.com.tr/akis/voyage/playlist.m3u8')">VOYAGE</button>
+                    <button class="r-btn stop-btn" onclick="stopRadio()">KAPAT</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <audio id="radioPlayer" preload="none"></audio>
+
     <script>
+        // Saat Scripti
         function clock() {
             var d = new Date();
             var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
             if(h<10) h='0'+h; if(m<10) m='0'+m; if(s<10) s='0'+s;
-            
             document.getElementById('hours').innerHTML = h;
             document.getElementById('minutes').innerHTML = m;
             document.getElementById('seconds').innerHTML = s;
             
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-            
             document.getElementById('date').innerHTML = '<span class="date-text">' + d.getDate() + ' ' + months[d.getMonth()] + '</span><span class="day-text">' + days[d.getDay()] + '</span>';
         }
         setInterval(clock, 1000);
         clock();
+
+        // Radyo Scripti
+        var player = document.getElementById('radioPlayer');
+        var statusText = document.getElementById('radio-status');
+
+        function playRadio(name, url) {
+            statusText.innerHTML = "Bağlanıyor...";
+            statusText.style.color = "#007aff";
+            player.src = url;
+            player.play();
+            
+            player.onplaying = function() {
+                statusText.innerHTML = "Çalıyor: " + name;
+                statusText.style.color = "#4cd964";
+            };
+            
+            player.onerror = function() {
+                statusText.innerHTML = "Yayın Bağlantı Hatası!";
+                statusText.style.color = "#ff3b30";
+            };
+        }
+
+        function stopRadio() {
+            player.pause();
+            player.src = "";
+            statusText.innerHTML = "Radyo Kapalı";
+            statusText.style.color = "#888888";
+        }
     </script>
 </body>
 </html>
