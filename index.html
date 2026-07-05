@@ -1,6 +1,5 @@
 <html>
 <head>
-    <!-- iOS 5 için Safari çubuklarını tamamen yok eden kritik kodlar -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,7 +12,6 @@
             font-family: 'Helvetica Neue', Arial, sans-serif; 
             text-align: center;
             overflow: hidden;
-            /* Ekranı dikeyde tam ortalamak için */
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-box-pack: center;
@@ -22,19 +20,19 @@
         }
         .container {
             width: 100%;
-            padding: 10px;
+            padding: 0 10px;
         }
-        /* iPad 1 (1024x768) ekranı için olabilecek en devasa font boyutu */
+        /* Rakamların ekrana devasa sığması için font boyutunu en üst sınıra çektik */
         #clock { 
-            font-size: 160px; 
+            font-size: 260px; 
             font-weight: bold; 
-            line-height: 1;
-            letter-spacing: -4px;
+            line-height: 0.9;
+            letter-spacing: -6px;
         }
         #date { 
-            font-size: 36px; 
-            color: #777777; 
-            margin-top: 30px; 
+            font-size: 42px; 
+            color: #666666; 
+            margin-top: 40px; 
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -42,15 +40,17 @@
 </head>
 <body>
     <div class="container">
-        <div id="clock">00:00:00</div>
+        <div id="clock">00:00</div>
         <div id="date">Yükleniyor...</div>
     </div>
     <script>
         function clock() {
             var d = new Date();
-            var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
-            if(h<10) h='0'+h; if(m<10) m='0'+m; if(s<10) s='0'+s;
-            document.getElementById('clock').innerHTML = h+':'+m+':'+s;
+            var h = d.getHours(), m = d.getMinutes();
+            if(h<10) h='0'+h; if(m<10) m='0'+m;
+            
+            // Saniyeyi kaldırıp sadece Saat:Dakika formatına çektik
+            document.getElementById('clock').innerHTML = h+':'+m;
             
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
