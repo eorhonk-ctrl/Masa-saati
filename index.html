@@ -20,27 +20,33 @@
         }
         .container {
             width: 100%;
-            padding: 0 10px;
         }
-        /* Rakamların ekrana devasa sığması için font boyutunu en üst sınıra çektik */
-        #clock { 
-            font-size: 260px; 
+        /* Saat ve Dakika alt alta gelerek ekranı dikeyde tamamen kaplar */
+        .time-block {
+            font-size: 320px; /* Fontu tam 320 piksele çıkardık! */
             font-weight: bold; 
-            line-height: 0.9;
-            letter-spacing: -6px;
+            line-height: 0.85;
+            letter-spacing: -10px;
+            display: block;
+        }
+        /* Alttaki dakika bloğu */
+        #minutes {
+            color: #eeeeee;
         }
         #date { 
-            font-size: 42px; 
-            color: #666666; 
-            margin-top: 40px; 
+            font-size: 38px; 
+            color: #555555; 
+            margin-top: 50px; 
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="clock">00:00</div>
+        <!-- Saat ve Dakika Dev Boyutta Alt Alta -->
+        <span id="hours" class="time-block">00</span>
+        <span id="minutes" class="time-block">00</span>
         <div id="date">Yükleniyor...</div>
     </div>
     <script>
@@ -49,8 +55,8 @@
             var h = d.getHours(), m = d.getMinutes();
             if(h<10) h='0'+h; if(m<10) m='0'+m;
             
-            // Saniyeyi kaldırıp sadece Saat:Dakika formatına çektik
-            document.getElementById('clock').innerHTML = h+':'+m;
+            document.getElementById('hours').innerHTML = h;
+            document.getElementById('minutes').innerHTML = m;
             
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
