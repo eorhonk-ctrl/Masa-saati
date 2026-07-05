@@ -21,25 +21,21 @@
         .container { width: 100%; padding: 0 10px; }
         .clock-wrapper { display: -webkit-box; -webkit-box-pack: center; -webkit-box-align: center; }
         
-        /* Devasa saat karakterleriniz */
         .time-digits { 
             font-size: 210px; font-weight: bold; line-height: 1; letter-spacing: -8px;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         
-        /* Kibar iki nokta */
         #separator {
             font-size: 110px; font-weight: bold; line-height: 1;
             margin: 0 35px; color: #ffffff; display: block;
         }
         
-        /* Kırmızı saniye */
         #seconds {
             font-size: 70px; color: #ff3b30; margin-left: 25px; font-weight: bold;
             -webkit-transform: scaleY(1.4); transform: scaleY(1.4); display: block;
         }
         
-        /* Renkli tarih */
         #date { 
             font-size: 34px; margin-top: 70px; text-transform: uppercase; letter-spacing: 3px;
             font-family: Arial, sans-serif; font-weight: bold;
@@ -107,7 +103,7 @@
 <body>
 
     <div class="container">
-        <!-- SAAT (Korundu) -->
+        <!-- SAAT -->
         <div class="clock-wrapper">
             <span id="hours" class="time-digits">00</span>
             <span id="separator">:</span>
@@ -115,10 +111,10 @@
             <span id="seconds">00</span>
         </div>
         
-        <!-- TARİH (Korundu) -->
+        <!-- TARİH -->
         <div id="date">Yükleniyor...</div>
 
-        <!-- YENİ İSTASYONLARLA RADYO ALANI -->
+        <!-- ESKİ SİSTEMLERE UYUMLU SAF MP3 RADYOLAR -->
         <div class="radio-wrapper">
             <div id="radio-status">Radyo Kapalı</div>
             <div class="radio-grid">
@@ -128,11 +124,11 @@
                     <button class="r-btn" onclick="playRadio('Power FM', 'https://listen.powerapp.com.tr/powerfm/mpeg/icecast.audio')">POWER FM</button>
                     <button class="r-btn" onclick="playRadio('Power Türk', 'https://listen.powerapp.com.tr/powerturk/mpeg/icecast.audio')">POWER TÜRK</button>
                 </div>
-                <!-- 2. Sıra Radyolar -->
+                <!-- 2. Sıra Radyolar (Yalın MP3 Yayın Portları Yerleştirildi) -->
                 <div class="radio-row">
-                    <button class="r-btn" onclick="playRadio('Radyo Alaturka', 'https://stream.radyoalaturka.com.tr/stream')">RD ALATURKA</button>
-                    <button class="r-btn" onclick="playRadio('Kral FM', 'https://radyo.kralmuzik.com.tr/akis/kralfm/playlist.m3u8')">KRAL FM</button>
-                    <button class="r-btn" onclick="playRadio('Radyo Voyage', 'https://radyo.kralmuzik.com.tr/akis/voyage/playlist.m3u8')">VOYAGE</button>
+                    <button class="r-btn" onclick="playRadio('Radyo Alaturka', 'https://37.247.98.8/stream/36/')">RD ALATURKA</button>
+                    <button class="r-btn" onclick="playRadio('Kral FM', 'https://37.247.98.8/stream/13/')">KRAL FM</button>
+                    <button class="r-btn" onclick="playRadio('Radyo Voyage', 'https://37.247.98.8/stream/31/')">VOYAGE</button>
                     <button class="r-btn stop-btn" onclick="stopRadio()">KAPAT</button>
                 </div>
             </div>
