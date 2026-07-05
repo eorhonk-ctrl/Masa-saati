@@ -9,8 +9,7 @@
         body { 
             background: #000000; 
             color: #ffffff; 
-            /* Dijital saat hissi veren, rakamları sabit genişlikte tutan Courier New fontu */
-            font-family: 'Courier New', Courier, monospace; 
+            font-family: 'Arial Black', Gadget, sans-serif; 
             text-align: center;
             overflow: hidden;
             display: -webkit-box;
@@ -21,33 +20,52 @@
         }
         .container {
             width: 100%;
-            padding: 0 20px;
+            padding: 0 10px;
         }
         .clock-wrapper {
             display: -webkit-box;
             -webkit-box-pack: center;
-            -webkit-box-align: baseline; /* Saniyenin alttan hizalanması için */
+            -webkit-box-align: center;
         }
-        /* Yatayda yan yana durabilecek en devasa font boyutu */
+        /* Fontu dikey eksende %140 yukarı doğru uzatıyoruz */
         #time { 
-            font-size: 195px; 
+            font-size: 210px; 
             font-weight: bold; 
             line-height: 1;
-            letter-spacing: -6px;
+            letter-spacing: -8px;
+            -webkit-transform: scaleY(1.4);
+            transform: scaleY(1.4);
+            display: block;
         }
-        /* Yanında daha küçük ve estetik duran saniye */
+        /* Kırmızı saniye */
         #seconds {
-            font-size: 65px;
-            color: #ff3b30; /* Saniyeyi daha şık göstermek için tatlı bir dijital kırmızı tonu */
-            margin-left: 15px;
+            font-size: 70px;
+            color: #ff3b30; 
+            margin-left: 20px;
             font-weight: bold;
+            -webkit-transform: scaleY(1.4);
+            transform: scaleY(1.4);
+            display: block;
         }
+        /* Renklendirilmiş ve hafif esnetilmiş yeni tarih bloğu */
         #date { 
             font-size: 34px; 
-            color: #555555; 
-            margin-top: 40px; 
+            margin-top: 80px; 
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            -webkit-transform: scaleY(1.1);
+            transform: scaleY(1.1);
+        }
+        /* Tarih sayısı ve ay adı için beyaz renk */
+        .date-text {
+            color: #ffffff;
+        }
+        /* Gün adı için canlı mavi renk */
+        .day-text {
+            color: #007aff;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -57,6 +75,7 @@
             <span id="time">00:00</span>
             <span id="seconds">00</span>
         </div>
+        <!-- Renkli dinamik tarih alanı -->
         <div id="date">Yükleniyor...</div>
     </div>
     <script>
@@ -65,14 +84,17 @@
             var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
             if(h<10) h='0'+h; if(m<10) m='0'+m; if(s<10) s='0'+s;
             
-            // Saat ve Dakika yan yana ana blokta
             document.getElementById('time').innerHTML = h + ':' + m;
-            // Saniye küçük blokta
             document.getElementById('seconds').innerHTML = s;
             
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
-            document.getElementById('date').innerHTML = d.getDate() + ' ' + months[d.getMonth()] + ' ' + days[d.getDay()];
+            
+            // Tarih metnini renkli parçalara ayırarak ekrana basıyoruz
+            var dateHtml = '<span class="date-text">' + d.getDate() + ' ' + months[d.getMonth()] + '</span>' + 
+                           '<span class="day-text">' + days[d.getDay()] + '</span>';
+            
+            document.getElementById('date').innerHTML = dateHtml;
         }
         setInterval(clock, 1000);
         clock();
