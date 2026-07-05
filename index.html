@@ -9,7 +9,8 @@
         body { 
             background: #000000; 
             color: #ffffff; 
-            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            /* Dijital saat hissi veren, rakamları sabit genişlikte tutan Courier New fontu */
+            font-family: 'Courier New', Courier, monospace; 
             text-align: center;
             overflow: hidden;
             display: -webkit-box;
@@ -20,43 +21,54 @@
         }
         .container {
             width: 100%;
+            padding: 0 20px;
         }
-        /* Saat ve Dakika alt alta gelerek ekranı dikeyde tamamen kaplar */
-        .time-block {
-            font-size: 320px; /* Fontu tam 320 piksele çıkardık! */
+        .clock-wrapper {
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            -webkit-box-align: baseline; /* Saniyenin alttan hizalanması için */
+        }
+        /* Yatayda yan yana durabilecek en devasa font boyutu */
+        #time { 
+            font-size: 195px; 
             font-weight: bold; 
-            line-height: 0.85;
-            letter-spacing: -10px;
-            display: block;
+            line-height: 1;
+            letter-spacing: -6px;
         }
-        /* Alttaki dakika bloğu */
-        #minutes {
-            color: #eeeeee;
+        /* Yanında daha küçük ve estetik duran saniye */
+        #seconds {
+            font-size: 65px;
+            color: #ff3b30; /* Saniyeyi daha şık göstermek için tatlı bir dijital kırmızı tonu */
+            margin-left: 15px;
+            font-weight: bold;
         }
         #date { 
-            font-size: 38px; 
+            font-size: 34px; 
             color: #555555; 
-            margin-top: 50px; 
+            margin-top: 40px; 
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Saat ve Dakika Dev Boyutta Alt Alta -->
-        <span id="hours" class="time-block">00</span>
-        <span id="minutes" class="time-block">00</span>
+        <div class="clock-wrapper">
+            <span id="time">00:00</span>
+            <span id="seconds">00</span>
+        </div>
         <div id="date">Yükleniyor...</div>
     </div>
     <script>
         function clock() {
             var d = new Date();
-            var h = d.getHours(), m = d.getMinutes();
-            if(h<10) h='0'+h; if(m<10) m='0'+m;
+            var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
+            if(h<10) h='0'+h; if(m<10) m='0'+m; if(s<10) s='0'+s;
             
-            document.getElementById('hours').innerHTML = h;
-            document.getElementById('minutes').innerHTML = m;
+            // Saat ve Dakika yan yana ana blokta
+            document.getElementById('time').innerHTML = h + ':' + m;
+            // Saniye küçük blokta
+            document.getElementById('seconds').innerHTML = s;
             
             var days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
             var months = ['Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
